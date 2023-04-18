@@ -1,25 +1,37 @@
-importar  al azar
- sistema de importación
-de  PyQt6 . QtWidgets  importa  QApplication , QWidget , QPushButton
-de  PyQt6 . QtGui  importar  QColor
+import re
+from PyQt6.QtWidgets import QApplication, QWidget, QLineEdit, QPushButton, QMessageBox
 
-clase  Ventana ( QWidget ):
-    def  __init__ ( auto ):
-        súper (). __inicio__ ()
+class EmailValidator(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle('Validador de correo electrónico')
+        self.setGeometry(100, 100, 300, 150)
+        layout = QVBoxLayout()
+        self.setLayout(layout)
 
-        uno mismo setGeometry ( 200 , 200 , 300 , 200 )
-        uno mismo setWindowTitle ( "Botón colorido" )
+        self.email_edit = QLineEdit()
+        self.email_edit.setPlaceholderText('Ingrese su correo electrónico')
+        layout.addWidget(self.email_edit)
 
-        uno mismo boton  =  QPushButton ( "Presiona" , self )
-        uno mismo botón _ setGeometry ( 100 , 80 , 100 , 50 )
-        uno mismo botón _ hizo clic conectar ( self . cambiar_color )
+        self.validar_button = QPushButton('Validar')
+        self.validar_button.clicked.connect(self.validar_correo)
+        layout.addWidget(self.validar_button)
 
-    def  cambiar_color ( auto ):
-        color  =  QColor ( aleatorio . randint ( 0 , 255 ), aleatorio . randint ( 0 , 255 ), aleatorio . randint ( 0 , 255 ))
-        uno mismo botón _ setStyleSheet ( "color de fondo: {}" . formato ( color . nombre ()))
+    def validar_correo(self):
+        correo = self.email_edit.text()
+        if not correo:
+            QMessageBox.warning(self, 'Error', 'Por favor ingrese su correo electrónico.')
+            return
 
-si  __nombre__  ==  "__principal__" :
-    app  =  QApplication ( sys . argv )
-    ventana  =  ventana ()
-    ventana . mostrar ()
-    sistema _ salir ( aplicación . exec ())
+        es_valido = re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', correo)
+
+        if es_valido:
+            QMessageBox.information(self, 'Resultado', 'El correo electrónico es válido.')
+        else:
+            QMessageBox.warning(self, 'Resultado', 'El correo electrónico no es válido.')
+
+if __name__ == '__main__':
+    app = QApplication([])
+    window = EmailValidator()
+    window.show()
+    app.exec()
