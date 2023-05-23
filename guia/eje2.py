@@ -6,7 +6,7 @@ columnas = int(input("ingresa la cantiad de columnas que tendra: "))
 
 Ma = [[random.randint(1, 5) for j in range(columnas)] for i in range(filas)]
 
-Mai = np.linalg.inv(Ma)
+Mai = np.linalg.inv(Ma) 
 
 Mul = np.matmul(Ma, Mai)
 
