@@ -4,6 +4,10 @@ import numpy as np
 matriz1 = np.random.randint(-10 , -4, size=(3,3))
 matriz2 = np.random.randint(-10 , -4, size=(3,3))
 
+l = [[1, 2], [3, 4]]
+l1 = [[1, 2], [3, 4]]
+print(l * l1)
+
 print("La matriz 1 es:", matriz1)
 print("La matriz 2 es:", matriz2)
 
