@@ -32,12 +32,15 @@ class Miniwindow(QDialog):
         # Botón de inicio de sesión
         self.login_button = QPushButton("Iniciar Sesión")
         self.login_button.clicked.connect(self.login)
+        self.cancel_button = QPushButton("Cancelar")
+        self.cancel_button.clicked.connect(self.close)
 
         layout.addWidget(self.username_label)
         layout.addWidget(self.username_input)
         layout.addWidget(self.password_label)
         layout.addWidget(self.password_input)
         layout.addWidget(self.login_button)
+        layout.addWidget(self.cancel_button)
 
         self.setLayout(layout)
 
@@ -85,7 +88,7 @@ class mywindow(QMainWindow):
         self.button0.clicked.connect(lambda checked: self.push_reaction(self.alt_window))
         self.button1.clicked.connect(lambda checked: self.push_reaction(self.alt_window))
         self.button2.clicked.connect(lambda checked: self.push_reaction(self.alt_window))
-        self.button3.clicked.connect(lambda checked: self.cancelar)
+        self.button3.clicked.connect(self.cancelar)
 
         my_window = QWidget()
         my_window.setLayout(Main_box)
@@ -93,7 +96,7 @@ class mywindow(QMainWindow):
         self.setCentralWidget(my_window)
 
     def cancelar(self):
-        pass
+        self.close()
 
     def push_reaction(self, window: Miniwindow):
         if window.isVisible():
