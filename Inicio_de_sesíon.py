@@ -6,20 +6,49 @@ from PyQt6.QtCore import QSize
 from PyQt6.QtGui import QColor, QFont
 from random import randint
 
-class otherwindow(QWidget):
+class guiasventana(QWidget):
+    def __init__(self, availability, excursion_type):
+        super().__init__()
+        layer = QVBoxLayout()
+        self.label0 = QLabel(f"Días :{randint(2, 7)}")
+        self.setWindowTitle("Ventana de Guias")
+        self.setMinimumSize(100,250)
+        layer.addWidget(self.label0)
+        layer.addWidget(QLabel(f"Disponibilidad: {availability} días"))
+        layer.addWidget(QLabel(f"Tipo de excursión: {excursion_type}"))
+        layer.addWidget(self.label0)
+        self.setLayout(layer)
+class logisticaventana(QWidget):
     def __init__(self):
         super().__init__()
         layer = QVBoxLayout()
-        self.label0 = QLabel(f"NASHEX :{randint(5, 69)}")
-        self.setWindowtTitle("ventana secundaria")
-        layer.addWidget(self.label0)
-
+        self.label1 = QLabel(f"hola que tal")
+        self.setWindowTitle("Ventana para losgitica")
+        self.setMinimumSize(250,250)
+        layer.addWidget(self.label1)
+        layer.addWidget(QLabel((f"sexoooo")))
+        layer.addWidget(QLabel((f"sexooooo2")))
+        layer.addWidget(self.label1)
         self.setLayout(layer)
+
+class turistasventana(QWidget):
+    def __init__(self):
+        super().__init__()
+        layer = QVBoxLayout()
+        self.label2 = QLabel(f"turista puto")
+        self.setWindowTitle("Ventana para turistas")
+        self.setMinimumSize(250,250)
+        layer.addWidget(self.label2)
+        layer.addWidget(QLabel((f"turismo")))
+        layer.addWidget(QLabel((f"excursiones")))
+        layer.addWidget(self.label2)
+        self.setLayout(layer)
+
 class Miniwindow(QDialog):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Miniwindow")
-        self.setMinimumSize(200,200)
+        self.setMinimumSize(400,200)
         layout = QVBoxLayout()
 
         # Etiquetas y campos de entrada para nombre de usuario y contraseña
@@ -49,10 +78,27 @@ class Miniwindow(QDialog):
         password = self.password_input.text()
 
         # Lógica de verificación de inicio de sesión aquí
-        if username == "admin" and password == "password":
+        if username == "guias" and password == "excursiones":
             print("Inicio de sesión exitoso")
+            self.close()
+            availability = randint(2, 5)
+            excursion_type = ("heavy")
+            self.other_window = guiasventana(availability, excursion_type)
+            self.other_window.show()
+
+        elif username == "logistica" and password == "materiales":
+            print("Inicio de sesión exitoso")
+            self.close()
+            self.other_window = logisticaventana()
+            self.other_window.show()
+
+        elif username == "turista" and password == "turismo":
+            print("Inicio de sesión exitoso")
+            self.close()
+            self.other_window = turistasventana()
+            self.other_window.show()
         else:
-            print("Credenciales incorrectas") 
+            print("Inicio de sesión fallido")  
 
 class mywindow(QMainWindow):
     
@@ -110,4 +156,3 @@ if __name__ == "__main__":
     window = mywindow()
     window.show()  # Obligatorio (dentro del init o fuera)
     app.exec()
-
