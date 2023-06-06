@@ -16,7 +16,7 @@ class guiasventana(QWidget):
     def __init__(self, availability, excursion_type):
         super().__init__()
         layer = QVBoxLayout()
-        self.label0 = QLabel(f"Días :{randint(2, 7)}")
+        self.label0 = QLabel(f"Días de descanso: tienes de por si 2 días de descansa, dias extras disponibles {randint(0, 2)}")
         self.setWindowTitle("Ventana de Guias")
         self.setMinimumSize(100,250)
         layer.addWidget(self.label0)
@@ -26,7 +26,7 @@ class guiasventana(QWidget):
         self.setLayout(layer)
     
 def get_disponibilidad():
-    disponibilidad = random.choice([True, False])
+    disponibilidad = random.choice(["si disponible", "no disponible"])
     return disponibilidad
 
 class logisticaventana(QWidget):
@@ -35,33 +35,35 @@ class logisticaventana(QWidget):
         dark_mode = QColor(0 + amount, 0 + amount, 0 + amount)
         a0.setStyleSheet(f"background-color: {dark_mode.name()}; color: white")
     
-    def __init__(self):
+    def __init__(self, avalability2):
         super().__init__()
         layer = QVBoxLayout()
-        self.label1 = QLabel(f"Alojamiento")
+        self.label1 = QLabel(f"Transporte")
         self.setWindowTitle("Ventana para losgitica")
         self.setMinimumSize(250,250)
         layer.addWidget(self.label1)
-        layer.addWidget(QLabel((f"Transporte")))
+        layer.addWidget(QLabel(f"Alojamiento :{avalability2}"))
         layer.addWidget(QLabel((f"Pasajes")))
         layer.addWidget(self.label1)
         self.setLayout(layer)
-
+def get_disponibilidad2():
+    disponibilidad = random.choice(["si se encuentra con disponibbles", "no disponible"])
+    return disponibilidad
 class turistasventana(QWidget):
     
     def setDarkMode(self, a0, amount=50):
         dark_mode = QColor(0 + amount, 0 + amount, 0 + amount)
         a0.setStyleSheet(f"background-color: {dark_mode.name()}; color: white")
     
-    def __init__(self):
+    def __init__(self, excursion_turista):
         super().__init__()
         layer = QVBoxLayout()
-        self.label2 = QLabel(f"Guias acompañastes")
+        self.label2 = QLabel(f"Guias acompañastes: 1 obligatorio ")
         self.setWindowTitle("Ventana para turistas")
         self.setMinimumSize(250,250)
         layer.addWidget(self.label2)
-        layer.addWidget(QLabel((f"Planel elegido")))
-        layer.addWidget(QLabel((f"Dias de duracion")))
+        layer.addWidget(QLabel(f"plan elegido: {excursion_turista}"))
+        layer.addWidget(QLabel(f"Guias necesarios: {randint(0, 2)}"))
         layer.addWidget(self.label2)
         self.setLayout(layer)
 
@@ -101,6 +103,41 @@ class Selection(QDialog):
         self.accepted_type = "senderismo heavy"
         self.accept()
 
+class Turistasexcursion(QDialog):
+    def __init__(self, parent = None):
+        super().__init__(parent)
+        self.setWindowTitle("Selecciona el tipo de senderismo que realizarás")
+
+        layout = QVBoxLayout()
+
+        self.label = QLabel("Selecciona el senderismo a realizar:", self)
+        layout.addWidget(self.label)
+
+        self.btn_light = QPushButton("Senderismo light", self)
+        self.btn_light.clicked.connect(self.selection_light)
+        layout.addWidget(self.btn_light)
+
+        self.btn_plus = QPushButton("Senderismo plus", self)
+        self.btn_plus.clicked.connect(self.selection_plus)
+        layout.addWidget(self.btn_plus)
+
+        self.btn_heavy = QPushButton("Senderismo heavy", self)
+        self.btn_heavy.clicked.connect(self.selection_heavy)
+        layout.addWidget(self.btn_heavy)
+
+        self.setLayout(layout)
+
+    def selection_light(self):
+        self.accepted_type = "senderismo light"
+        self.accept()
+
+    def selection_plus(self):
+        self.accepted_type = "senderismo plus"
+        self.accept()
+
+    def selection_heavy(self):
+        self.accepted_type = "senderismo heavy"
+        self.accept()
 class Miniwindow(QDialog):
     def __init__(self):
         super().__init__()
@@ -139,10 +176,6 @@ class Miniwindow(QDialog):
             print("Inicio de sesión exitoso")
             self.close()
             availability = get_disponibilidad()
-            if availability:
-                print("Hay disponibilidad")
-            else:
-                print("No hay disponibilidad")
             excursion_type_dialog = Selection()
             if excursion_type_dialog.exec() == QDialog.DialogCode.Accepted:
                 excursion_type = excursion_type_dialog.accepted_type
@@ -152,14 +185,18 @@ class Miniwindow(QDialog):
         elif username == "logistica" and password == "materiales":
             print("Inicio de sesión exitoso")
             self.close()
-            self.other_window = logisticaventana()
+            availability2 = get_disponibilidad2()
+            self.other_window = logisticaventana(availability2)
             self.other_window.show()
 
         elif username == "turista" and password == "turismo":
             print("Inicio de sesión exitoso")
             self.close()
-            self.other_window = turistasventana()
-            self.other_window.show()
+            excursion_type_dialog = Turistasexcursion()
+            if excursion_type_dialog.exec() == QDialog.DialogCode.Accepted:
+                excursion_type = excursion_type_dialog.accepted_type
+                self.other_window = turistasventana(excursion_type)
+                self.other_window.show()
         else:
             print("Inicio de sesión fallido")  
 
