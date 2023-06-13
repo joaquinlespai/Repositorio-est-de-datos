@@ -13,4 +13,4 @@ frutas = tuple(Frutas)
 print(Frutas)
 
 Cantidad_Frutas = len(Frutas)
-print(Cantidad_Frutas)
+print("La cantidad de frutas es: ", Cantidad_Frutas)
