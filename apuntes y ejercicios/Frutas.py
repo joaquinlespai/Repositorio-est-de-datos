@@ -1,26 +1,16 @@
-class Piladocumentos:
-    def __init__(self):
-        self.documentos = []
+Frutas = ("manzana", "platano", "naranja", "manzana", "pera")
+print("La cantidad de frutas es: ", Frutas)
+Frutas_sin_repeticion = tuple(set(Frutas))
+print("Frutas sin repetirce: ", Frutas_sin_repeticion)
 
-    def agregar_documentos(self, documento):
-        self.documentos.append(documento)
+NuevaFruta = input("Ingresa la nueva fruta que quieres ingresar: ")
+Frutas = Frutas + (NuevaFruta,)
+print("la nueva cantidad de frutas es: ", Frutas)
 
-    def descartar_documentos(self):
-        if self.esta_vacia():
-            print("La pila de documentos está vacía")
-        else:
-            documento_descartado = self.documentos.pop()
-            print("Se ha descartado el documento:", documento_descartado)
+Frutas = list(Frutas)
+Frutas.remove("platano")
+frutas = tuple(Frutas)
+print(Frutas)
 
-    def esta_vacia(self):
-        return len(self.documentos) == 0
-
-papeleo = Piladocumentos()
-
-papeleo.agregar_documentos("Informe final")
-papeleo.agregar_documentos("Guía de Estudio")
-papeleo.agregar_documentos("Tesis 4")
-papeleo.agregar_documentos("Seminario Osorno")
-
-while not papeleo.esta_vacia():
-    papeleo.descartar_documentos
+Cantidad_Frutas = len(Frutas)
+print(Cantidad_Frutas)
