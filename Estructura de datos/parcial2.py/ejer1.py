@@ -45,17 +45,21 @@ class circularBi:
             auxnum += 1
 
     def estavacia(self):
-        if self.primero is None:
-            return True
-        else:
-            return False
-        
+        return self.len == 0
+
     def __str__(self):
+        if self.estavacia():
+            return "La lista está vacía"
+
         aux = self.primero
-        for i in range(self.len):
-            print(aux.dato)
+        lista_str = ""
+        for _ in range(self.len):
+            lista_str += str(aux.dato) + "\n"
             aux = aux.siguiente
-        return "  "
+
+        return lista_str
+
+
     
 if __name__ == "__main__":
     agendar = circularBi()
@@ -63,6 +67,6 @@ if __name__ == "__main__":
     print(agendar)
     agendar.agregarcontacto("Dante" " +569-12341214 " "dantefarfan@gmail.com")
     print(agendar)
-    agendar.agregarcontacto("Alan"  "+569-64520987 " "alangutierrez@gmail.com")
-    agendar.eliminarcontacto(1)
+    agendar.agregarcontacto("Alan"  " +569-64520987 " "alangutierrez@gmail.com")
+    agendar.eliminarcontacto(0)
     print(agendar)
