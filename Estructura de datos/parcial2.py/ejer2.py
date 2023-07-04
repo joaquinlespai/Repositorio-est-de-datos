@@ -1,70 +1,72 @@
 class Nodo:
-    def __init__(self, dato):
-        self.dato = dato
-        self.siguiente = None
+    def __init__(self, codigo, nombre, descripcion, cantidad):
+        self.codigo = codigo
+        self.nombre = nombre
+        self.descripcion = descripcion
+        self.cantidad = cantidad
 
-class circularBi:
+class Circular:
     def __init__(self):
-        self.primero = None
-        self.ultimo = None
-        self.len = 0
+        self.articulos = []
 
-    def inventarioagregar(self,dato):
-        nuevoNodo = Nodo(dato)
+    def agregar_articulo(self, codigo, nombre, descripcion, cantidad):
+        nuevoarticulo = Nodo(codigo, nombre, descripcion, cantidad)
+        self.articulos.append(nuevoarticulo)
 
-        if self.primero is None:
-            self.primero = nuevoNodo
-            self.ultimo = nuevoNodo
-            self.ultimo.siguiente = self.primero
-            self.len += 1
+    def eliminar_articulo(self, codigo):
+        for articulo in self.articulos:
+            if articulo.codigo == codigo:
+                self.articulos.remove(articulo)
 
-        else:
-            nuevoNodo.siguiente = self.primero
-            self.ultimo.siguiente = nuevoNodo
-            self.ultimo = nuevoNodo
-            self.len += 1
-
-    def eliminarinventario(self, num):
-        aux = self.primero
-        auxnum = 0
-        if auxnum == 0:
-            self.ultimo.siguiente = aux.siguiente
-            self.primero = self.ultimo.siguiente
-            self.len += 1
-
-            del aux
-            return
-        
-        while True:
-            if num == auxnum + 1:
-                aux.siguiente = aux.siguiente.siguiente
-                self.len -= 1
-            elif num == auxnum:
-                del aux
+    def buscar_articulo(self, codigo):
+        for articulo in self.articulos:
+            if articulo.codigo == codigo:
+                print("Código: {}".format(articulo.codigo))
+                print("Nombre: {}".format(articulo.nombre))
+                print("Descripción: {}".format(articulo.descripcion))
+                print("Cantidad disponible: {}".format(articulo.cantidad))
                 return
-            aux = aux.siguiente
-            auxnum += 1
 
-    def estavacia(self):
-        if self.primero is None:
-            return True
-        else:
-            return False
+        print("Artículo no encontrado")
 
-    def __str__(self):
-        aux = self.primero
-        for i in range(self.len):
-            print(aux.dato)
-            aux.siguiente
-        return "  "
+    def actualizar_cantidad(self, codigo, nueva_cantidad):
+        for articulo in self.articulos:
+            if articulo.codigo == codigo:
+                articulo.cantidad = nueva_cantidad
+                return
 
-if __name__ == "__main__":
-    inventario = circularBi()
-    inventario.inventarioagregar("codigo: 12345" " manzanas " " hay: 5")
-    print(inventario)
-    inventario.inventarioagregar("codigo: 65432" " platanos " " hay: 10")
-    print(inventario)
-    inventario.inventarioagregar("codigo: 09765" " peras " " hay: 21")
-    print(inventario)
-    inventario.eliminarinventario(3)
-    print(inventario)
+        print("Artículo no encontrado")
+
+    def mostrar_articulos(self):
+        self.articulos.sort(key=lambda articulo: articulo.codigo)
+
+        for articulo in self.articulos:
+            print("Código: {}".format(articulo.codigo))
+            print("Nombre: {}".format(articulo.nombre))
+            print("Descripción: {}".format(articulo.descripcion))
+            print("Cantidad disponible: {}".format(articulo.cantidad))
+            print()
+
+inventario = Circular()
+inventario.agregar_articulo("12313", "Manzanas", "Manzanas Rojas", 13)
+print(inventario)
+inventario.agregar_articulo("14532", "Peras", "Pera granel", 1)
+print(inventario)
+inventario.agregar_articulo("23531", "Platanos", "Planatos verdes", 25)
+print(inventario)
+
+
+inventario.mostrar_articulos()
+print("Buscar artículo por código:")
+
+inventario.buscar_articulo("12313")
+print(inventario)
+
+inventario.eliminar_articulo("23531")
+print(inventario)
+
+inventario.actualizar_cantidad("12313", 33)
+print(inventario)
+    
+print("Todos los artículos del inventario:")
+inventario.mostrar_articulos()
