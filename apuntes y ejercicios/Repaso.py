@@ -43,7 +43,12 @@ class listaCircular:
                 return
             aux = aux.siguiente
             auxnum += 1
-                
+            
+    def estavacia(self):
+        if self.primero is None:
+            return True
+        else:
+            return False
             
     def __str__(self):
         aux = self.primero
